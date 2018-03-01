@@ -1,0 +1,12 @@
+<snippet>
+	<content><![CDATA[function ${1:function_name}(
+	${2:slv : std_logic_vector}
+) return ${3:return_type} is
+	${4:-- }variable ${5:res} : ${3:return_type};
+begin
+	return ${5:res};
+end function;]]></content>
+	<tabTrigger>functionbody</tabTrigger>
+	<scope>source.vhdl meta.block.package_body.vhdl, source.vhdl meta.block.architecture</scope>
+	<description>function body template</description>
+</snippet>

@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[(others => ${1:$SELECTION})]]></content>
     <tabTrigger>others</tabTrigger>
-    <scope>source.vhdl meta.block.architecture</scope>
+    <scope>source.vhdl meta.block.architecture, source.vhdl meta.block.package.vhdl</scope>
     <description>'others' assignment</description>
 </snippet>

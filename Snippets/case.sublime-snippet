@@ -4,6 +4,6 @@
 		${2:}
 end case;]]></content>
 	<tabTrigger>case</tabTrigger>
-	<scope>source.vhdl meta.block.architecture</scope>
+	<scope>source.vhdl meta.block.architecture.body.vhdl</scope>
 	<description>case statement</description>
 </snippet>

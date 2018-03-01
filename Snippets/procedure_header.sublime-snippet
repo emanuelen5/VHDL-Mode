@@ -1,0 +1,9 @@
+<snippet>
+	<content><![CDATA[
+procedure ${1:procedure_name}${2:(
+	${3:signal slv : in std_logic}
+)};]]></content>
+	<tabTrigger>procedureheader</tabTrigger>
+	<scope>source.vhdl meta.block.package.vhdl, source.vhdl meta.block.architecture</scope>
+	<description>procedure header template</description>
+</snippet>
