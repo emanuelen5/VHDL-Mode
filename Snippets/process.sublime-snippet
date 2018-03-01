@@ -1,0 +1,9 @@
+<snippet>
+	<content><![CDATA[${2:${1:process_name} :} process (${3:sensitivity_list}) is
+begin
+	${4:}
+end process ${1:process_name};]]></content>
+	<tabTrigger>process</tabTrigger>
+	<scope>source.vhdl</scope>
+	<description>process template</description>
+</snippet>
