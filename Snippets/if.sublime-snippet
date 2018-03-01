@@ -1,0 +1,10 @@
+<snippet>
+	<content><![CDATA[if (${1:$SELECTION}) then
+	${2:}${3:
+elsif (${5:}) then}${4:
+else}
+end if;]]></content>
+	<tabTrigger>if</tabTrigger>
+	<scope>source.vhdl meta.block.architecture</scope>
+	<description>if statement</description>
+</snippet>

@@ -1,0 +1,9 @@
+<snippet>
+	<content><![CDATA[case (${1:signal_name}) is
+	when others =>
+		${2:}
+end case;]]></content>
+	<tabTrigger>case</tabTrigger>
+	<scope>source.vhdl meta.block.architecture</scope>
+	<description>case statement</description>
+</snippet>
