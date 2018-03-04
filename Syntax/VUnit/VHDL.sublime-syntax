@@ -1,0 +1,71 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+file_extensions:
+  - vhd
+scope: source.vunit.vhdl
+
+contexts:
+  main:
+    - match: ""
+      push: "Packages/VHDL Mode/Syntax/VHDL.sublime-syntax"
+      with_prototype:
+        - include: check-functions
+        - include: run-functions
+
+  run-functions:
+    - match: "(run)(\\()"
+      captures:
+        1: support.function.test-case.vunit
+        2: punctuation.group.parens.begin.vhdl
+      push: test-case-def
+    - match: |-
+        (?xi)\b(
+          test_runner_cleanup
+        )\b\s*(\()
+      captures:
+        1: support.function.vunit
+        2: punctuation.group.parens.begin.vhdl
+      push: "Packages/VHDL Mode/Syntax/VHDL.sublime-syntax#library-function-parameters"
+    - match: |-
+        (?xi)\b(
+          test_runner_setup
+        )\b\s*(\()
+      captures:
+        1: support.function.vunit
+        2: punctuation.group.parens.begin.vhdl
+      push: "Packages/VHDL Mode/Syntax/VHDL.sublime-syntax#library-function-parameters"
+
+  check-functions:
+    - match: |-
+        (?xi)\b(
+          check_equal
+        )\b\s*(\()
+      captures:
+        1: support.function.vunit
+        2: punctuation.group.parens.begin.vhdl
+      push: "Packages/VHDL Mode/Syntax/VHDL.sublime-syntax#library-function-parameters"
+
+  test-case-def:
+    - match: '"'
+      scope: string.double.quoted.vunit.vhdl, punctuation.definition.string.begin.vhdl
+    - match: '(?<=")'
+      set: [test-case-end, test_case_name]
+
+  test_case_name:
+    - meta_scope: string.double.quoted.vunit.vhdl, entity.name.type.test-case.vunit
+    - match: "\\."
+      scope: string.escape-char.vunit.vhdl
+    - match: "(?=\")"
+      pop: true
+    - match: "."
+      scope: string.test-case-name.vunit.vhdl
+
+  test-case-end:
+    - match: " (?=\"\\))"
+      scope: invalid.test-case-name.trailing-space.vunit.vhdl
+    - match: "\""
+      scope: string.double.quoted.vunit.vhdl
+    - match: "\\)"
+      scope: punctuation.group.parens.end.vhdl
+      pop: true
