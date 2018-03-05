@@ -45,6 +45,14 @@ contexts:
         1: support.function.vunit
         2: punctuation.group.parens.begin.vhdl
       push: "Packages/VHDL Mode/Syntax/VHDL.sublime-syntax#library-function-parameters"
+    - match: |-
+        (?xi)\b(
+          check_failed
+        )\b\s*(\()
+      captures:
+        1: support.function.vunit
+        2: punctuation.group.parens.begin.vhdl
+      push: "Packages/VHDL Mode/Syntax/VHDL.sublime-syntax#library-function-parameters"
 
   test-case-def:
     - match: '"'
