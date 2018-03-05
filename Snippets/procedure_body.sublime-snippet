@@ -1,10 +1,10 @@
 <snippet>
 	<content><![CDATA[
-procedure ${1:procedure_name}${2:(
+procedure ${1:procedure_name}${2: (
 	${3:signal slv : in std_logic}
 )} is
 begin
-  $SELECTION
+	$SELECTION
 end procedure ${1:procedure_name};]]></content>
 	<tabTrigger>procedurebody</tabTrigger>
 	<scope>source.vhdl meta.block.package_body.vhdl, source.vhdl meta.block.architecture</scope>
