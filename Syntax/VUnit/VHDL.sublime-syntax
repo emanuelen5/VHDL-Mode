@@ -61,13 +61,11 @@ contexts:
       set: [test-case-end, test_case_name]
 
   test_case_name:
-    - meta_scope: string.double.quoted.vunit.vhdl, entity.name.type.test-case.vunit
+    - meta_scope: string.double.quoted.vunit.vhdl, entity.name.type.test-case.vunit.vhdl
     - match: "\\."
       scope: string.escape-char.vunit.vhdl
     - match: "(?=\")"
       pop: true
-    - match: "."
-      scope: string.test-case-name.vunit.vhdl
 
   test-case-end:
     - match: " (?=\"\\))"
