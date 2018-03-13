@@ -1,6 +1,6 @@
 <snippet>
 	<content><![CDATA[function ${1:function_name} (${2:slv : std_logic_vector}) return ${3:return_type};]]></content>
 	<tabTrigger>functionheader</tabTrigger>
-	<scope>source.vhdl meta.block.package.vhdl, source.vhdl meta.block.architecture</scope>
+	<scope>source.vhdl meta.block.package.declaration.vhdl, source.vhdl meta.block.architecture</scope>
 	<description>function header template</description>
 </snippet>

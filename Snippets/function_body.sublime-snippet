@@ -7,6 +7,6 @@ begin
 	return ${5:res};
 end function;]]></content>
 	<tabTrigger>functionbody</tabTrigger>
-	<scope>source.vhdl meta.block.package_body.vhdl, source.vhdl meta.block.architecture</scope>
+	<scope>source.vhdl meta.block.package.body.vhdl, source.vhdl meta.block.architecture</scope>
 	<description>function body template</description>
 </snippet>
