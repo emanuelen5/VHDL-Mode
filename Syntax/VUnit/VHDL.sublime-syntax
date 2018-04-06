@@ -1,6 +1,7 @@
 %YAML 1.2
 ---
 # See http://www.sublimetext.com/docs/3/syntax.html
+name: VHDL (VUnit)
 file_extensions:
   - vhd
 scope: source.vunit.vhdl
