@@ -737,21 +737,7 @@ contexts:
   signal-decl:
     - match: (?i)\b(signal)\b
       scope: storage.type.signal.vhdl
-      push:
-        - meta_scope: meta.statement.signal.vhdl
-        - match: ({{identifier}})
-          scope: variable.other.vhdl
-        - match: (,)
-          scope: punctuation.separator.vhdl
-        - match: (:)
-          scope: punctuation.separator.vhdl
-          set:
-            - match: (;)
-              scope: punctuation.terminator.vhdl
-              pop: true
-            - include: basic-paren-group
-            - include: stray-parens
-            - include: reserved-words
+      push: variable-decl-name
 
   constant-decl:
     - match: (?i)\b(constant)\b
@@ -801,6 +787,7 @@ contexts:
       push: variable-decl-name
 
   variable-decl-name:
+    - meta_scope: meta.declaration.vhdl
     - match: '{{identifier}}'
       scope: variable.other.vhdl
     - match: (,)
@@ -813,6 +800,9 @@ contexts:
   variable-decl-type:
     - match: '{{identifier}}'
       scope: support.type.other.vhdl
+    - include: basic-paren-group
+    - include: stray-parens
+    - include: reserved-words
     - match: :\=
       scope: keyword.operator.assignment.vhdl
       set: variable-decl-assignment
