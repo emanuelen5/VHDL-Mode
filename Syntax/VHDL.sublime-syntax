@@ -45,7 +45,7 @@ contexts:
     - include: numbers
     - include: strings
     - include: types
-    - include: library-subprograms
+    - include: library-functions
 
   main:
     - include: library-unit-declarations
@@ -1106,6 +1106,7 @@ contexts:
     - include: conc-signal-assignment
     # This one should be last or late because it matches most anything.
     - include: component-instantiation
+    - include: library-procedures
 
   conc-signal-assignment:
     # Basic
@@ -1616,6 +1617,7 @@ contexts:
   # Sequential statements
   ###########################################################################
   sequential-statements:
+    - include: library-procedures
     - include: seq-if
     - include: seq-case
     - include: seq-loops
@@ -2224,28 +2226,9 @@ contexts:
         )\b
       scope: support.type.numeric-std.vhdl
 
-  # Some of these are functions, and some are procedures.  They differ in how
-  # they close.  Note for color schemes, the comment term is 'support.function'
+  # Note for color schemes, the comment term is 'support.function'
   # regardless of how they actually behave in the language.
-  library-subprograms:
-    # Actually built-in function, not just predefined.
-    - match: |-
-        (?xi)\b(
-          to_string
-        )\b\s*(\()
-      captures:
-        1: support.function.predefined.vhdl
-        2: punctuation.group.parens.begin.vhdl
-      push: library-function-parameters
-    # Predefined Package env
-    - match: |-
-        (?xi)((std\.env\.)?\b(
-          resolution_limit
-        ))\b\s*(\()
-      captures:
-        1: support.function.env.vhdl
-        4: punctuation.group.parens.begin.vhdl
-      push: library-function-parameters
+  library-procedures:
     - match: |-
         (?xi)((std\.env\.)?\b(
           stop|finish
@@ -2266,6 +2249,26 @@ contexts:
         1: support.function.textio.vhdl
         2: punctuation.group.parens.begin.vhdl
       push: library-procedure-parameters
+
+  library-functions:
+    # Actually built-in function, not just predefined.
+    - match: |-
+        (?xi)\b(
+          to_string
+        )\b\s*(\()
+      captures:
+        1: support.function.predefined.vhdl
+        2: punctuation.group.parens.begin.vhdl
+      push: library-function-parameters
+    # Predefined Package env
+    - match: |-
+        (?xi)((std\.env\.)?\b(
+          resolution_limit
+        ))\b\s*(\()
+      captures:
+        1: support.function.env.vhdl
+        4: punctuation.group.parens.begin.vhdl
+      push: library-function-parameters
     - match: |-
         (?xi)\b(
           justify
