@@ -917,6 +917,67 @@ contexts:
           pop: true
         - include: sequential-statements
 
+  block-begin:
+    - match: |-
+        (?xi)
+          (({{identifier}})\s*(:)\s*)?
+          ((postponed)\s*)?
+          (\bblock\b)
+      captures:
+        2: entity.block.name.label.vhdl
+        3: punctuation.separator.vhdl
+        5: keyword.other.vhdl
+        6: keyword.other.vhdl
+      push: block-decl
+
+  block-decl:
+    - meta_scope: meta.block.block.declaration.vhdl
+    - match: (?i)\b(begin)\b
+      captures:
+        1: keyword.declaration.vhdl
+      set: block-statements
+    - match: '(?i)(\bis\b)'
+      # Optional word but ought to be caught.
+      captures:
+        1: keyword.declaration.vhdl
+    - include: block-sensitivity-list
+    - include: variable-decl
+    - include: type-decl
+    - include: subtype-decl
+    - include: constant-decl
+    - include: alias-decl
+    - include: attribute-decl
+    - include: attribute-spec
+    - include: procedure-spec
+    - include: function-spec
+
+  block-statements:
+    - meta_scope: meta.block.block.body.vhdl
+    - match: (?i)((end)\s+)((postponed)\s*)?((block)\s*)(({{identifier}})\s*)?(;)
+      captures:
+        2: keyword.declaration.vhdl
+        4: keyword.other.vhdl
+        6: keyword.other.vhdl
+        8: entity.block.name.label.vhdl
+        9: punctuation.terminator.vhdl
+      pop: true
+    - include: concurrent-statements
+
+  block-sensitivity-list:
+    - match: '(\()'
+      captures:
+        1: punctuation.section.group.begin.vhdl
+      push:
+        - meta_scope: meta.group.sensitivity-list.vhdl
+        - match: '(\))'
+          captures:
+            1: punctuation.section.group.end.vhdl
+          pop: true
+        - include: sensitivity-items
+    - match: '(\))'
+      captures:
+        1: invalid.illegal.unmatched-parenthesis.vhdl
+
   function-spec:
     - match: (?i)((pure|impure)\s+)?(function)\s+({{identifier}})
       captures:
@@ -1048,6 +1109,7 @@ contexts:
   concurrent-statements:
     - include: assertion-statement
     - include: process-begin
+    - include: block-begin
     - include: generate-statements
     # This one should also be close to last since it tends to match to
     # lines with less than or equal to symbols in expressions.
