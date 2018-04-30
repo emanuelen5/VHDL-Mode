@@ -35,8 +35,8 @@ variables:
   decchars: '[0-9]'
   octchars: '[0-7]'
   binchars: '[0-1]'
-  modes: '(?i:inout|in|out|buffer|linkage)'
-  operator_symbols: '\+|\-|\*|/|\*\*|&|<\=|\=>|<|>|\=|/\='
+  modes: '(?i:\b(inout|in|out|buffer|linkage)\b)'
+  operator_symbols: '\+|\-|\*|/|\*\*|&|<\=|\=>|<|>|\=|/\=|\:\='
 
 contexts:
   prototype:
@@ -71,7 +71,7 @@ contexts:
         (?xi)
           ((entity)\s*)
           (({{identifier}})\s*)
-          (is)
+          (\bis\b)
       captures:
         2: storage.type.entity.vhdl
         4: entity.name.entity.vhdl
@@ -118,7 +118,7 @@ contexts:
         (?xi)
           ((entity)\s*)
           ((\S+)\s*)
-          (is)
+          (\bis\b)
       captures:
         2: storage.type.entity.vhdl
         4: invalid.illegal.identifier.vhdl
@@ -189,7 +189,7 @@ contexts:
         (?xi)
           ((package)\s*)
           (({{identifier}})\s*)
-          (is)
+          (\bis\b)
       captures:
         2: storage.type.package.vhdl
         4: entity.name.package.vhdl
@@ -231,7 +231,7 @@ contexts:
         (?xi)
           ((package)\s*)
           ((\S+)\s*)
-          (is)
+          (\bis\b)
       captures:
         2: storage.type.package.vhdl
         4: invalid.illegal.identifier.vhdl
@@ -261,7 +261,7 @@ contexts:
           ((package)\s*)
           ((body)\s*)
           (({{identifier}})\s*)
-          (is)
+          (\bis\b)
       captures:
         2: storage.type.package.vhdl
         4: keyword.other.vhdl
@@ -306,7 +306,7 @@ contexts:
           ((package)\s*)
           ((body)\s*)
           ((\S+)\s*)
-          (is)
+          (\bis\b)
       captures:
         2: storage.type.package.vhdl
         4: keyword.other.vhdl
@@ -337,7 +337,7 @@ contexts:
         (?xi)
           ((package)\s*)
           (({{identifier}})\s*)
-          ((is)\s*)
+          ((\bis\b)\s*)
           ((new)\s*)
           (({{identifier}})\s*)
       captures:
@@ -363,7 +363,7 @@ contexts:
           (({{identifier}})\s*)
           ((of)\s*)
           (({{identifier}})\s*)
-          (is)
+          (\bis\b)
       captures:
         2: storage.type.architecture.vhdl
         4: entity.name.architecture.vhdl
@@ -432,7 +432,7 @@ contexts:
           (({{identifier}})\s*)
           ((of)\s*)
           (({{identifier}})\s)
-          (is)
+          (\bis\b)
       captures:
         2: storage.type.configuration.vhdl
         4: entity.name.configuration.vhdl
@@ -671,7 +671,7 @@ contexts:
         (?xi)
           ((component)\s*)
           (({{identifier}})\s*)
-          (is)?
+          (\bis\b)?
       captures:
         2: storage.type.component.vhdl
         4: entity.name.component.vhdl
@@ -709,9 +709,9 @@ contexts:
     # Invalid identifier variation
     - match: |-
         (?xi)
-          ((component)\s*)
+          (\b(component)\b\s*)
           ((\S+)\s*)
-          (is)
+          \b(is)\b
       captures:
         2: storage.type.component.vhdl
         4: invalid.illegal.identifier.vhdl
@@ -735,7 +735,7 @@ contexts:
         - include: port-interface
 
   signal-decl:
-    - match: (?i)signal
+    - match: (?i)\b(signal)\b
       scope: storage.type.signal.vhdl
       push:
         - meta_scope: meta.statement.signal.vhdl
@@ -754,26 +754,12 @@ contexts:
             - include: reserved-words
 
   constant-decl:
-    - match: (?i)constant
+    - match: (?i)\b(constant)\b
       scope: storage.type.constant.vhdl
-      push:
-        - meta_scope: meta.statement.constant.vhdl
-        - match: ({{identifier}})
-          scope: variable.other.vhdl
-        - match: (,)
-          scope: punctuation.separator.vhdl
-        - match: (:)
-          scope: punctuation.separator.vhdl
-          set:
-            - match: (;)
-              scope: punctuation.terminator.vhdl
-              pop: true
-            - include: basic-paren-group
-            - include: stray-parens
-            - include: reserved-words
+      push: variable-decl-name
 
   type-decl:
-    - match: (?i)((type)\s*)({{identifier}})
+    - match: (?i)(\b(type)\b\s*)({{identifier}})
       captures:
         2: storage.type.type.vhdl
         3: entity.name.type.vhdl
@@ -795,7 +781,7 @@ contexts:
             - include: range-type
 
   subtype-decl:
-    - match: (?i)(subtype)\s+({{identifier}})\s+(is)
+    - match: (?i)\b(subtype)\b\s+({{identifier}})\s+\b(is)\b
       captures:
         1: storage.type.subtype.vhdl
         2: variable.other.vhdl
@@ -808,25 +794,40 @@ contexts:
         - include: reserved-words
 
   variable-decl:
-    - match: (?i)((shared)\s*)?(variable)
+    - match: (?i)(\b(shared)\b\s*)?\b(variable)\b
       captures:
         2: keyword.other.vhdl
         3: storage.type.variable.vhdl
-      push:
-        - meta_scope: meta.statement.variable.vhdl
-        - match: ({{identifier}})
-          scope: variable.other.vhdl
-        - match: (,)
-          scope: punctuation.separator.vhdl
-        - match: (:)
-          scope: punctuation.separator.vhdl
-          set:
-            - match: (;)
-              scope: punctuation.terminator.vhdl
-              pop: true
-            - include: basic-paren-group
-            - include: stray-parens
-            - include: reserved-words
+      push: variable-decl-name
+
+  variable-decl-name:
+    - match: '{{identifier}}'
+      scope: variable.other.vhdl
+    - match: (,)
+      scope: punctuation.separator.vhdl
+      set: variable-decl-name
+    - match: (:)
+      scope: punctuation.separator.vhdl
+      set: variable-decl-type
+
+  variable-decl-type:
+    - match: '{{identifier}}'
+      scope: support.type.other.vhdl
+    - match: :\=
+      scope: keyword.operator.assignment.vhdl
+      set: variable-decl-assignment
+    - match: ;
+      scope: punctuation.terminator.vhdl
+      pop: true
+
+  variable-decl-assignment:
+    - include: basic-paren-group
+    - include: stray-parens
+    - match: '{{identifier}}'
+      scope: variable.other
+    - match: ;
+      scope: punctuation.terminator.vhdl
+      pop: true
 
   attribute-decl:
     - match: (?i)(attribute)\s+({{identifier}})\s*(:)
@@ -863,7 +864,7 @@ contexts:
       scope: storage.type.alias.vhdl
       push:
         - meta_scope: meta.statement.alias.vhdl
-        - match: (?i)\b(is)\b
+        - match: (?i)(\bis\b)
           scope: keyword.declaration.vhdl
           set:
             - match: (;)
@@ -893,7 +894,7 @@ contexts:
           captures:
             1: punctuation.terminator.vhdl
           pop: true
-        - match: (?i)(is)
+        - match: (?i)(\bis\b)
           captures:
             1: keyword.declaration.vhdl
           set: procedure-body
@@ -931,7 +932,7 @@ contexts:
           captures:
             1: punctuation.terminator.vhdl
           pop: true
-        - match: (?i)(is)
+        - match: (?i)(\bis\b)
           captures:
             1: keyword.declaration.vhdl
           set: function-body
@@ -952,6 +953,8 @@ contexts:
             3: entity.name.procedure.vhdl
             5: punctuation.terminator.vhdl
           pop: true
+        - match: (?xi)\breturn\b
+          scope: keyword.reserved.vhdl
         - include: sequential-statements
 
   subprogram-declarative-item:
@@ -1188,7 +1191,7 @@ contexts:
       captures:
         1: keyword.declaration.vhdl
       set: process-statements
-    - match: '(?i)\b(is)\b'
+    - match: '(?i)(\bis\b)'
       # Optional word but ought to be caught.
       captures:
         1: keyword.declaration.vhdl
@@ -1413,7 +1416,7 @@ contexts:
     - match: |-
         (?xi)
           (({{identifier}})\s*(:)\s*)?
-          (if)
+          (\bif\b)
       captures:
         2: entity.name.label.vhdl
         3: punctuation.separator.vhdl
@@ -1648,6 +1651,9 @@ contexts:
           captures:
             1: keyword.other.vhdl
           set: seq-if-statements
+        - match: "{{reserved-words}}"
+          scope: invalid.illegal.vhdl
+          pop: true
         - include: basic-paren-group
         - include: stray-parens
         - include: expression-operators
@@ -1662,7 +1668,7 @@ contexts:
       push:
         - meta_scope: meta.block.case.expression.vhdl
         - include: arithmetic-operators
-        - match: '(?i)\b(is)\b'
+        - match: '(?i)(\bis\b)'
           captures:
             1: keyword.declaration.begin.vhdl
           set:
@@ -1937,7 +1943,7 @@ contexts:
     # Any of the printable characters in the standard character set can be
     # used.  Used the non-word character element to protect against
     # single quote used for attributes (e.g. a'range)
-    - match: '[^a-zA-Z0-9]('')'
+    - match: '(?<=[^a-zA-Z0-9])('')'
       captures:
         1: punctuation.definition.string.begin.vhdl
       push:
@@ -2084,7 +2090,7 @@ contexts:
   constants:
     - match: (?i)\b(true|false)\b
       scope: support.constant.std.vhdl
-    - match: (?i)\b(note|warning|error|failrue)\b
+    - match: (?i)\b(note|warning|error|failure)\b
       scope: support.constant.std.vhdl
     - match: |-
         (?xi)\b(
@@ -2264,6 +2270,12 @@ contexts:
   ###########################################################################
   reserved-words:
     - match: |-
+        (?xi)(?<=\')\b(
+          left|right|low|high|range|reverse_range|length|ascending|
+          element
+        )\b
+      scope: keyword.attribute.vhdl
+    - match: |-
         (?xi)\b(
           abs|access|after|alias-decl|all|and|architecture|array|assert|assume|
           assume_guarantee|attribute|begin|block|body|buffer|bus|case|
@@ -2279,12 +2291,6 @@ contexts:
           vmode|vprop|vunit|wait|when|while|with|xnor|xor
         )\b
       scope: keyword.reserved.vhdl
-    - match: |-
-        (?xi)\b(
-          left|right|low|high|range|reverse_range|length|ascending|
-          element
-        )\b
-      scope: keyword.attribute.vhdl
 
   library-names:
     - match: |-
