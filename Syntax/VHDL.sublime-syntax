@@ -1573,20 +1573,54 @@ contexts:
     - match: |-
         (?xi)
           (({{identifier}})\s*(:)\s*)?
-          ((assert)\s*)
+          (\b(assert)\b\s*)
       captures:
         2: entity.name.label.vhdl
         3: punctuation.separator.vhdl
-        5: keyword.other.vhdl
-      push:
-        - meta_scope: meta.statement.assert.vhdl
-        - match: (;)
-          captures:
-            1: punctuation.terminator.vhdl
-          pop: true
-        - match: \b(report|severity)\b
-          captures:
-            1: keyword.other.vhdl
+        5: keyword.other.assert.vhdl
+      push: assertion-body
+
+  assertion-body:
+    - meta_scope: meta.statement.assert.vhdl
+    - include: expression-operators
+    - include: basic-paren-group
+    - include: stray-parens
+    - include: reserved-words
+    - match: (?i)\b(report)\b
+      scope: keyword.other.vhdl
+      set: report-body
+    - match: (?i)\b(severity)\b
+      scope: keyword.other.vhdl
+      set: severity-body
+    - match: (;)
+      captures:
+        1: punctuation.terminator.vhdl
+      pop: true
+
+  report-body:
+    - meta_scope: meta.statement.report.vhdl
+    - include: expression-operators
+    - include: basic-paren-group
+    - include: stray-parens
+    - include: reserved-words
+    - match: (?i)\b(severity)\b
+      scope: keyword.other.vhdl
+      set: severity-body
+    - match: (;)
+      captures:
+        1: punctuation.terminator.vhdl
+      pop: true
+
+  severity-body:
+    - meta_scope: meta.statement.severity.vhdl
+    - include: constants-severity
+    - match: '[ ]'
+    - match: ([^;]*)
+      scope: invalid.illegal.expecting-end-of-statement.vhdl
+    - match: (;)
+      captures:
+        1: punctuation.terminator.vhdl
+      pop: true
 
   ###########################################################################
   # Sequential statements
@@ -1596,6 +1630,7 @@ contexts:
     - include: seq-case
     - include: seq-loops
     - include: seq-shorties
+    - include: assertion-statement
     - include: seq-variable-assignment
     # The signal assignment should be next to last as the assignment
     # operator is the same as less-than-or-equal.
@@ -2149,8 +2184,7 @@ contexts:
   constants:
     - match: (?i)\b(true|false)\b
       scope: support.constant.std.vhdl
-    - match: (?i)\b(note|warning|error|failure)\b
-      scope: support.constant.std.vhdl
+    - include: constants-severity
     - match: |-
         (?xi)\b(
           math_e|math_1_over_e|math_pi|math_2_pi|math_1_over_pi|
@@ -2163,6 +2197,10 @@ contexts:
       scope: support.constant.math-real.vhdl
     - match: (?i)\b(math_cbase_1|math_cbase_j|math_czero)\b
       scope: support.constant.math-complex.vhdl
+
+  constants-severity:
+    - match: (?i)\b(note|warning|error|failure)\b
+      scope: support.constant.std.vhdl
 
   # In textio, the type 'width' is not marked.  Very minor and
   # is a commonly used identifier name as well.
