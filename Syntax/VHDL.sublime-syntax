@@ -1177,7 +1177,7 @@ contexts:
         (?xi)
           (({{identifier}})\s*(:)\s*)?
           ((postponed)\s*)?
-          (process)
+          (\bprocess\b)
       captures:
         2: entity.name.label.vhdl
         3: punctuation.separator.vhdl
@@ -1380,7 +1380,7 @@ contexts:
           (({{identifier}})\s*(:)\s*)?
           ((for)\s*)
           (({{identifier}})\s*)
-          (in)
+          (\bin\b)
       captures:
         2: entity.name.label.vhdl
         3: punctuation.separator.vhdl
@@ -1639,17 +1639,14 @@ contexts:
         2: keyword.other.vhdl
         3: punctuation.terminator.vhdl
       pop: true
-    - match: '(?i)(else)'
-      captures:
-        1: keyword.other.vhdl
-    - match: '(?i)(elsif)'
-      captures:
-        1: keyword.other.vhdl
+    - match: '(?i)\b(else)\b'
+      scope: keyword.other.vhdl
+    - match: '(?i)\b(elsif)\b'
+      scope: keyword.other.vhdl
       set:
         - meta_scope: meta.block.if.conditional.vhdl
-        - match: '(?i)(then)'
-          captures:
-            1: keyword.other.vhdl
+        - match: '(?i)\b(then)\b'
+          scope: keyword.other.vhdl
           set: seq-if-statements
         - match: "{{reserved-words}}"
           scope: invalid.illegal.vhdl
@@ -2257,7 +2254,7 @@ contexts:
     - include: basic-paren-group
     - include: prototype
     - include: reserved-words
-    - match: (\))\s*(;)
+    - match: (\))\s*(?=;)
       captures:
         1: punctuation.group.parens.end.vhdl
         2: punctuation.terminator.vhdl
@@ -2270,13 +2267,7 @@ contexts:
   ###########################################################################
   reserved-words:
     - match: |-
-        (?xi)(?<=\')\b(
-          left|right|low|high|range|reverse_range|length|ascending|
-          element
-        )\b
-      scope: keyword.attribute.vhdl
-    - match: |-
-        (?xi)\b(
+        (?xi)(?<=[a-zA-Z0-9]\')\b(
           abs|access|after|alias-decl|all|and|architecture|array|assert|assume|
           assume_guarantee|attribute|begin|block|body|buffer|bus|case|
           component|configuration|constant|context|cover|default|disconnect|
