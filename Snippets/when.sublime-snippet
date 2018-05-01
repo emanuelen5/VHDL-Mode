@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[when ${1:$SELECTION} =>
+	${2:}]]></content>
+	<tabTrigger>when</tabTrigger>
+	<scope>source.vhdl meta.block.architecture meta.block.case.vhdl</scope>
+	<description>when statement</description>
+</snippet>

@@ -1,0 +1,8 @@
+<snippet>
+	<content><![CDATA[package body ${1:} is
+	${2:}
+end package body ${1:};]]></content>
+	<tabTrigger>packagebody</tabTrigger>
+	<scope>source.vhdl</scope>
+	<description>package body template</description>
+</snippet>
