@@ -7,6 +7,6 @@ begin
 	$SELECTION
 end procedure ${1:procedure_name};]]></content>
 	<tabTrigger>procedurebody</tabTrigger>
-	<scope>source.vhdl meta.block.package_body.vhdl, source.vhdl meta.block.architecture</scope>
+	<scope>source.vhdl meta.block.package_body.vhdl, source.vhdl meta.block.architecture, source.vhdl meta.block.package.body.vhdl</scope>
 	<description>procedure body template</description>
 </snippet>
