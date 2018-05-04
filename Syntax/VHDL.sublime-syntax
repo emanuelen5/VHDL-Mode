@@ -969,11 +969,14 @@ contexts:
         1: invalid.illegal.unmatched-parenthesis.vhdl
 
   function-spec:
-    - match: (?i)((pure|impure)\s+)?(function)\s+({{identifier}})
+    - match: (?i)((pure|impure)\s+)?(function)\s+(({{identifier}})|(")(\+|\-|\*|\*\*|/|&|abs|not|and|or|nand|nor|xor|xnor|mod|rem|sll|srl|rol|ror|sla|sra)("))
       captures:
         2: keyword.other.vhdl
         3: storage.type.function.vhdl
-        4: entity.name.function.vhdl
+        5: entity.name.function.vhdl
+        6: punctuation.definition.string.begin.vhdl
+        7: entity.name.function.primitive.vhdl
+        8: punctuation.definition.string.end.vhdl
       push:
         - meta_scope: meta.block.function.specification.vhdl
         - include: interface-list
