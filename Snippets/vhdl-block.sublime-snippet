@@ -1,6 +1,6 @@
 <snippet>
 	<content><![CDATA[
-${1:<BLOCK_LABEL>} : block (${2:<guard_expression>}) is
+${1:BLOCK_LABEL} : block (${2:guard_expression}) is
 begin
 	$0
 end block $1;

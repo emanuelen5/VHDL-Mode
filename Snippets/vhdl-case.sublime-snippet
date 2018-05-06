@@ -1,7 +1,7 @@
 <snippet>
 	<content><![CDATA[
-case (${1:<expression>}) is
-	when ${2:<choice_1>} =>
+case (${1:expression}) is
+	when ${2:choice_1} =>
 		$0
 	when others =>
 		null;

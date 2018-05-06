@@ -1,6 +1,6 @@
 <snippet>
 	<content><![CDATA[
-component ${1:<identifier>} is
+component ${1:identifier} is
 	port (
 		$0
 	);

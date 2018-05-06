@@ -1,7 +1,6 @@
 <snippet>
 	<content><![CDATA[
-architecture ${1:<identifier>} of ${2:<entity_name>} is
-
+architecture ${1:arch} of ${2:entity_name} is
 begin
 	$0
 end architecture $1;

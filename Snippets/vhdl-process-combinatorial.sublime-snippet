@@ -1,6 +1,6 @@
 <snippet>
 	<content><![CDATA[
-${1:<PROCESS_NAME>} : process (${2:all})
+${1:PROCESS_NAME} : process (${2:all})
 begin
 	$0
 end process $1;

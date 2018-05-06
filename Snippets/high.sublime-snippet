@@ -1,6 +1,0 @@
-<snippet>
-	<content><![CDATA['high]]></content>
-	<tabTrigger>'high</tabTrigger>
-	<scope>source.vhdl</scope>
-	<description>high attribute</description>
-</snippet>

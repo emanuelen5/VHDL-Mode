@@ -1,6 +1,6 @@
 <snippet>
 	<content><![CDATA[
-${1:<PROCESS_NAME>} : process (${2:clk}, ${3:reset})
+${1:PROCESS_NAME} : process (${2:clk}, ${3:reset})
 begin
 	if ($3 = '${4:1}') then
 		$0

@@ -1,6 +1,6 @@
 <snippet>
 	<content><![CDATA[
-${1:<LABEL>} : if (${2:<condition>}) generate
+${1:LABEL} : if (${2:condition}) generate
 	$0
 else generate
 

@@ -1,6 +1,6 @@
 <snippet>
 	<content><![CDATA[
-disconnect ${1:<signal | others | all>} : ${2:<type>} after ${3:<time_expression>};$0 
+disconnect ${1:signal_others_all} : ${2:type_name} after ${3:time_expression};$0 
 ]]></content>
 	<tabTrigger>disconnect</tabTrigger>
 	<scope>source.vhdl</scope>
