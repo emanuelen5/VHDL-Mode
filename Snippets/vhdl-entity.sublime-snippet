@@ -1,6 +1,6 @@
 <snippet>
 	<content><![CDATA[
-entity ${1:identifier} is
+entity ${1:${TM_FILENAME/(.*?)(\..+)/$1/}} is
 	$0
 end entity $1;
 ]]></content>
