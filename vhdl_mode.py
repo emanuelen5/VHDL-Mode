@@ -1,5 +1,5 @@
 """
-VHDL Mode for Sublime Text 3
+VHDL-Mode for Sublime Text 3
 
 This package attempts to recreate to some level of fidelity the features
 in the vhdl-mode in Emacs.
@@ -30,7 +30,7 @@ class vhdlModeInsertHeaderCommand(sublime_plugin.TextCommand):
     """
     def run(self, edit):
         # Assigning this to a string to keep command shorter later.
-        template = "Packages/VHDL Mode/Snippets/vhdl-header.sublime-snippet"
+        template = "Packages/VHDL-Mode/Snippets/vhdl-header.sublime-snippet"
 
         # Looking for a name, first the buffer name, then the file name,
         # then finally a default value.

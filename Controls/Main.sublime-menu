@@ -12,14 +12,14 @@
                 "children":
                 [
                     {
-                        "caption": "VHDL Mode",
+                        "caption": "VHDL-Mode",
                         "children":
                         [
                             {
                                 "caption": "Settings",
                                 "command": "edit_settings", "args":
                                 {
-                                    "base_file": "${packages}/VHDL Mode/vhdl_mode.sublime-settings",
+                                    "base_file": "${packages}/VHDL-Mode/vhdl_mode.sublime-settings",
                                     "default": "{\n\t$0\n}\n"
                                 }
                             },
@@ -30,7 +30,7 @@
                                 "caption": "Key Bindings - Default",
                                 "command": "edit_settings", "args":
                                 {
-                                    "base_file": "${packages}/VHDL Mode/Controls/Default ($platform).sublime-keymap",
+                                    "base_file": "${packages}/VHDL-Mode/Controls/Default ($platform).sublime-keymap",
                                 }
                             }
                         ]

@@ -189,10 +189,10 @@ class vhdlModePasteAsTestbenchCommand(sublime_plugin.WindowCommand):
     def run(self):
         """Sublime TextCommand run method"""
         # Assigning this to a string to keep command shorter later.
-        template = "Packages/VHDL Mode/Snippets/vhdl-testbench.sublime-snippet"
+        template = "Packages/VHDL-Mode/Snippets/vhdl-testbench.sublime-snippet"
 
         tb_view = self.window.new_file()
-        tb_view.assign_syntax('Packages/VHDL Mode/Syntax/VHDL.sublime-syntax')
+        tb_view.assign_syntax('Packages/VHDL-Mode/Syntax/VHDL.sublime-syntax')
         tb_view.set_name('{}_tb.vhd'.format(_interface.name))
 
         entity_name = '{}_tb'.format(_interface.name)

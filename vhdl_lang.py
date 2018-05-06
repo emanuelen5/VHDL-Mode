@@ -323,7 +323,7 @@ def indent_vhdl(lines, initial=0, tab_size=4, use_spaces=True):
     yaml = ruamel.yaml.YAML()
     yaml.version = (1, 2)
 
-    rules_str = sublime.load_resource('Packages/VHDL Mode/Syntax/beautify_rules.yaml')
+    rules_str = sublime.load_resource('Packages/VHDL-Mode/Syntax/beautify_rules.yaml')
     rules_blob = yaml.load(rules_str)
 
     key_list = rules_blob['key_list']
