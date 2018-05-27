@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Indentation Rules</string>
+	<key>scope</key>
+	<string>source.vhdl</string>
+	<key>settings</key>
+	<dict>
+		<key>increaseIndentPattern</key>
+		<string>(?x)
+			\b(process|function|architecture|entity|begin)\b
+		</string>
+
+		<key>decreaseIndentPattern</key>
+		<string>(?x)
+			\b(end)\b
+		</string>
+
+		<!-- <key>bracketIndentNextLinePattern</key>
+		<string>(?x)
+			\b(port|generic)\b
+		</string> -->
+
+		<!-- <key>unIndentedLinePattern</key>
+		<string><![CDATA[^\s*((/\*|.*\*/|//|#|template\b.*?>(?!\(.*\))|@protocol|@interface(?!.*\{)|@implementation|@end).*)?$]]></string> -->
+
+		<!-- <key>indentSquareBrackets</key>
+		<true/> -->
+	</dict>
+</dict>
+</plist>
